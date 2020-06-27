@@ -19,6 +19,15 @@ user node['tomcat']['user'] do
   shell node['tomcat']['shell']
 end
 
+tar_extract node['tomcat']['tar_url'] do
+  target_dir node['tomcat']['home_dir']
+  download_dir node['tomcat']['download_location']
+  tar_flags [ '-P', '--strip-components 1' ]
+  group node['tomcat']['group']
+  user node['tomcat']['user']
+end
+
+=begin
 remote_file node['tomcat']['download_location'] do
   backup false
   group node['tomcat']['group']
@@ -36,6 +45,7 @@ archive_file node['tomcat']['download_location'] do
   options [ "--strip-components=1" ]
   action :extract
 end
+=end
 
 systemd_unit 'tomcat.service' do
   content <<-EOU.gsub(/^\s+/, '')

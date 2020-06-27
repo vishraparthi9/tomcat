@@ -14,3 +14,4 @@ run_list 'tomcat::default'
 
 # Specify a custom source for a single cookbook:
 cookbook 'tomcat', path: '.'
+cookbook 'tar', '~> 2.2.0', :supermarket
