@@ -4,6 +4,10 @@
 #
 # Copyright:: 2020, The Authors, All Rights Reserved.
 
+yum_package 'java-1.7.0-openjdk' do
+  action :upgrade
+end
+
 group node['tomcat']['group'] do
   gid node['tomcat']['gid']
   action :create
