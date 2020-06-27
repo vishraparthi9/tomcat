@@ -17,5 +17,3 @@ chef_version '>= 14.0'
 # a Supermarket.
 #
 # source_url 'https://github.com/<insert_org_here>/tomcat'
-
-depends 'openjdk', '~> 0.1.2'
