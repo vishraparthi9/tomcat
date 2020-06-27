@@ -41,8 +41,8 @@ execute "Clean webapps" do
   not_if { ::File.exist?("#{node['tomcat']['webapps_folder']}/helloworld.war") }
 end
 
-file "#{node['tomcat']['webapps_folder']}/helloworld.war" do
-  content '/tmp/helloworld.war'
+remote_file "#{node['tomcat']['webapps_folder']}/helloworld.war" do
+  source 'file:///tmp/helloworld.war'
   group node['tomcat']['group']
   owner node['tomcat']['user']
   mode '0755'
