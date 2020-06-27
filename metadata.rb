@@ -17,3 +17,4 @@ chef_version '>= 14.0'
 # a Supermarket.
 #
 # source_url 'https://github.com/<insert_org_here>/tomcat'
+depends 'tar', '~> 2.2.0'
