@@ -10,7 +10,9 @@ name 'tomcat'
 default_source :supermarket
 
 # run_list: chef-client will run these recipes in the order specified.
-run_list 'tomcat::default'
+run_list 'java','tomcat::default'
 
 # Specify a custom source for a single cookbook:
 cookbook 'tomcat', path: '.'
+
+cookbook 'java', '= 1.28.0', :supermarket
