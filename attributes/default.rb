@@ -11,6 +11,7 @@ default['tomcat']['shell']='/bin/nologin'
 
 default['tomcat']['tar_url']='https://downloads.apache.org/tomcat/tomcat-8/v8.5.56/bin/apache-tomcat-8.5.56.tar.gz'
 default['tomcat']['download_location']='/tmp/apache-tomcat-8.5.56.tar.gz'
+default['tomcat']['webapps_folder']='/opt/tomcat/webapps'
 
 default['tomcat']['systemd_file_path']='/etc/systemd/system/tomcat.service'
 default['tomcat']['catalina_pid']='/opt/tomcat/temp/tomcat.pid'

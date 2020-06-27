@@ -19,34 +19,36 @@ user node['tomcat']['user'] do
   shell node['tomcat']['shell']
 end
 
+directory node['tomcat']['home_dir'] do
+  group node['tomcat']['group']
+  user node['tomcat']['user']
+ mode "0755"
+end
+
 tar_extract node['tomcat']['tar_url'] do
   target_dir node['tomcat']['home_dir']
-  download_dir node['tomcat']['download_location']
+  download_dir '/tmp'
   tar_flags [ '-P', '--strip-components 1' ]
   group node['tomcat']['group']
   user node['tomcat']['user']
-end
-
-=begin
-remote_file node['tomcat']['download_location'] do
-  backup false
-  group node['tomcat']['group']
-  mode '0755'
-  owner node['tomcat']['user']
-  source node['tomcat']['tar_url']
-  not_if { ::File.exist?(node['tomcat']['startup_script']) }
-end
-
-archive_file node['tomcat']['download_location'] do
-  destination node['tomcat']['home_dir']
-  group node['tomcat']['group']
-  mode '0754'
-  owner node['tomcat']['user']
-  options [ "--strip-components=1" ]
   action :extract
 end
-=end
 
+## App install
+execute "Clean webapps" do
+  cwd node['tomcat']['webapps_folder']
+  command "rm -rf *"
+  not_if { ::File.exist?("#{node['tomcat']['webapps_folder']}/helloworld.war") }
+end
+
+file "#{node['tomcat']['webapps_folder']}/helloworld.war" do
+  content '/tmp/helloworld.war'
+  group node['tomcat']['group']
+  owner node['tomcat']['user']
+  mode '0755'
+end
+
+## Create service file and start tomcat
 systemd_unit 'tomcat.service' do
   content <<-EOU.gsub(/^\s+/, '')
   [Unit]
@@ -76,7 +78,6 @@ systemd_unit 'tomcat.service' do
   EOU
 
 
-  user node['tomcat']['user']
   triggers_reload true
   action [ :create, :start, :enable ]
 end
