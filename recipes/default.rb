@@ -54,17 +54,17 @@ systemd_unit 'tomcat.service' do
   [Service]
   Type=forking
 
-  Environment=JAVA_HOME=<%= node['java']['java_home'] %>
-  Environment=CATALINA_PID=<%= node['tomcat']['catalina_pid'] %>
-  Environment=CATALINA_HOME=<%= node['tomcat']['home_dir'] %>
-  Environment=CATALINA_BASE=<%= node['tomcat']['home_dir'] %>
-  Environment='CATALINA_OPTS=<%= node['tomcat']['catalina_opts'] %>'
+  Environment=JAVA_HOME=node['java']['java_home']
+  Environment=CATALINA_PID=node['tomcat']['catalina_pid']
+  Environment=CATALINA_HOME=node['tomcat']['home_dir']
+  Environment=CATALINA_BASE=node['tomcat']['home_dir']
+  Environment="CATALINA_OPTS=node['tomcat']['catalina_opts']""
 
-  ExecStart=<%= node['tomcat']['startup_script'] %>
+  ExecStart=node['tomcat']['startup_script']
   ExecStop=/bin/kill -15 $MAINPID
 
-  User=<%= node['tomcat']['user'] %>
-  Group=<%= node['tomcat']['group'] %>
+  User=node['tomcat']['user']
+  Group=node['tomcat']['group']
   UMask=0007
   RestartSec=10
   Restart=always
